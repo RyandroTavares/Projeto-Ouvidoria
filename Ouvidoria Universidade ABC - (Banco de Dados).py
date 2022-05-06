@@ -1,5 +1,5 @@
-import OperacoesSQL
-abrir = OperacoesSQL.abrirBancoDados('localhost','root','amarajairla','ouvidoria') #Adentrar no banco de dados
+from OperacoesSQL import *
+abrir = abrirBancoDados('localhost','root','amarajairla','ouvidoria') #Adentrar no banco de dados
 
 listaTipos = ['Reclamação', 'Sugestão', 'Elogio'] #Lista de tipos da manifestações
 opcao = quantidade = 0
@@ -23,7 +23,7 @@ while opcao != 7: #Começo do Menu
 
     elif opcao == 1: #Começo da lista de manifestações
         sql = "SELECT * FROM manifestacoes"
-        resultado = OperacoesSQL.listarBancoDados(abrir,sql)
+        resultado = listarBancoDados(abrir,sql)
         print('Lista de todas manifestações!')
         for i in resultado:
             elemento = str('Protocolo: {}, Requisitante: {}, Tipo da Manifestação: {}, Descrição: {}'.format(i[0], i[1], i[2], i[3]))
@@ -31,7 +31,7 @@ while opcao != 7: #Começo do Menu
 
     elif opcao == 2: #Começo da lista de reclamações
         sql = "SELECT * FROM manifestacoes where tipo = 'Reclamação'"
-        resultado = OperacoesSQL.listarBancoDados(abrir,sql)
+        resultado = listarBancoDados(abrir,sql)
         print('Lista de todas reclamações!')
         for i in resultado:
             elemento = str('Protocolo: {}, Requisitante: {}, Descrição: {}'.format(i[0], i[1], i[3]))
@@ -39,7 +39,7 @@ while opcao != 7: #Começo do Menu
 
     elif opcao == 3: #Começo da lista de sugestões
         sql = "SELECT * FROM manifestacoes where tipo = 'Sugestão'"
-        resultado = OperacoesSQL.listarBancoDados(abrir,sql)
+        resultado = listarBancoDados(abrir,sql)
         print('Lista de todas sugestões!')
         for i in resultado:
             elemento = str('Protocolo: {}, Requisitante: {}, Descrição: {}'.format(i[0], i[1], i[3]))
@@ -47,7 +47,7 @@ while opcao != 7: #Começo do Menu
 
     elif opcao == 4: #Começo da lista de elogios
         sql = "SELECT * FROM manifestacoes where tipo = 'Elogio'"
-        resultado = OperacoesSQL.listarBancoDados(abrir,sql)
+        resultado = listarBancoDados(abrir,sql)
         print('Lista de todos elogios!')
         for i in resultado:
             elemento = str('Protocolo: {}, Requisitante: {}, Descrição: {}'.format(i[0], i[1], i[3]))
@@ -63,12 +63,12 @@ while opcao != 7: #Começo do Menu
         descricao = input('Digite a descrição: ')
         sql = "INSERT INTO manifestacoes (requisitante, tipo, descricao) VALUES (%s, %s, %s)"
         dados = (requisitante, listaTipos[tipo-1], descricao)
-        OperacoesSQL.insertNoBancoDados(abrir,sql,dados)
+        insertNoBancoDados(abrir,sql,dados)
         #Fim do criador de manifestações
     
     elif opcao == 6:
         sql = "SELECT * FROM manifestacoes"
-        resultado = OperacoesSQL.listarBancoDados(abrir,sql)
+        resultado = listarBancoDados(abrir,sql)
         quantidade = len(resultado)
         print('Protocolos Disponíveis: [{}]'.format(quantidade)) #Mostra quanto protocolos existe
         pesquisa = int(input('Digite o número do seu protocolo: ')) #Pesquisa para escolher o protocolo
@@ -82,4 +82,4 @@ while opcao != 7: #Começo do Menu
                     print(elemento)
 
 print('Saindo...')
-OperacoesSQL.encerrarBancoDados(abrir)
+encerrarBancoDados(abrir)
